@@ -22,15 +22,31 @@ class Form extends Component {
         this.props.submitParams(this.state.from, this.state.to);
     }
 
+    // renderSelectInput() {
+    //     return (
+    //         <select>
+    //             <option value="" disabled selected>From</option>
+    //         {this.props.currencies.map((currency, index) => {
+    //         return (
+    //             <option key={index} value={currency.currencyId}>{currency.currencyName}</option>
+    //         )
+    //     })}
+    //         </select>
+    //     )
+    // }
     renderSelectInput() {
         return (
-            <select>
-            {this.props.currencies.map(currency => {
-            return (
-                    <option value={currency.currencyId}>{currency.currencyName}</option>
-            )
-        })}
-            </select>
+            
+                this.props.currencies.map((currency, index) => {
+                    return (
+                        <option key={index} 
+                                value={currency.currencyId}
+                                >
+                                    {currency.currencyName}
+                        </option>
+                    )
+                })
+            
         )
     }
 
@@ -38,17 +54,14 @@ class Form extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    {this.renderSelectInput()}
-                    <input  type="text"
-                            value={this.state.from}
-                            name="from"
-                            placeholder="FROM"
-                            onChange={this.handleChange} />
-                    <input  type="text"
-                            value={this.state.to}
-                            name="to"
-                            placeholder="TO"
-                            onChange={this.handleChange} />
+                    <select value={this.state.from} name="from" onChange={this.handleChange}>
+                        <option value="" disabled>FROM</option>
+                        {this.renderSelectInput()}
+                    </select>
+                    <select value={this.state.to} name="to" onChange={this.handleChange}>
+                        <option value="" disabled>TO</option>
+                        {this.renderSelectInput()}
+                    </select>
                     <input  type="submit"
                             value="submit" />
                 </form>
