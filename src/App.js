@@ -44,13 +44,16 @@ class App extends Component {
       currencies: []
      }
     this.fetchConversionRate = this.fetchConversionRate.bind(this);
+    this.submitParams = this.submitParams.bind(this);
   }
 
   componentDidMount() {
     fetch('https://free.currencyconverterapi.com/api/v6/countries')
     .then(res => res.json())
     .then(res => {
-      this.setState({ currencies: Object.values(res.results) });
+      const currencies = Object.values(res.results);
+      console.log(currencies);
+      this.setState({ currencies });
     })
   }
 
@@ -73,8 +76,9 @@ class App extends Component {
     fetch(API_PATH)
       .then(res => res.json())
       .then(res => {
-        console.log(res);
-  });
+        console.log(Object.values(res)[0].val);
+        this.setState({ rate: Object.values(res)[0].val });
+      });
 }
 
   render() {
