@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 
-class Layout extends Component {
-    render() {
-        if (this.props.rate === null) {
-            return <div>Loading rate</div>
+
+
+
+const Layout = ({ rate, from, to }) => {
+    if (!rate) {
+            return <div className="output">Loading rate</div>
         }
-        return <div>The conversion rate from USD to GBP is {this.props.rate}</div>
-    }
+        return <div className="output">The conversion rate from {from} to {to} is {rate}</div>
+    
 }
 
+
+    
 
 export default Layout;

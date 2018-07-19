@@ -5,8 +5,7 @@ class Form extends Component {
         super();
         this.state = {
             from: '',
-            to: '',
-            currencies: []
+            to: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,20 +19,21 @@ class Form extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.submitParams(this.state.from, this.state.to);
+        this.props.fetchRate(this.state.from, this.state.to);
     }
 
     renderSelectInput() {
-        let currencies;
-        this.props.currencies 
-            ?  currencies = Object.values(this.props.currencies).map(currency => currency.currencyName).sort()
-            : currencies = null;
-
-        return this.props.currencies.map((currency, index) => {
+        //sort currencies array before mapping for better ux.
+        const sortedObj = this.props.currencies.sort((a, b) => {
+            let textA = a.currencyName;
+            let textB = b.currencyName;
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+        return sortedObj.map((currency, index) => {
                     return (
                         <option key={index} 
                                 value={currency.currencyId}>
-                                    {currencies[index]}
+                                    {currency.currencyName}
                         </option>
                     )
                 });
@@ -42,6 +42,7 @@ class Form extends Component {
     render() {
         return (
             <div>
+                <h2>Please choose two currencies to calculate conversion rate</h2>
                 <form onSubmit={this.handleSubmit}>
                     <select value={this.state.from} 
                             name="from" 

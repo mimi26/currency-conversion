@@ -8,15 +8,16 @@ class Converter extends Component {
         
     }
 
-    componentDidMount() {
-        this.props.fetchConversionRate();
-    }
+    // componentDidMount() {
+    //     this.props.fetchConversionRate();
+    // }
 
     render() {
         return (
             <div>
-                <Layout rate={this.props.rate}/>
                 <Form submitParams={this.props.submitParams} currencies={this.props.currencies} />
+                {this.props.rate ? <Layout rate={this.props.rate} /> : null}
+                
             </div>
         );
     }
