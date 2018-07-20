@@ -1,8 +1,22 @@
-.App {
+.container {
   text-align: center;
 }
 
 .output {
   margin-top: 1.5em;
   font-size: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  height: 80px;
+  width: 50%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.submit {
+  width: 25%;
 }

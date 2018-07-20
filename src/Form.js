@@ -20,21 +20,40 @@ class Form extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.props.fetchRate(this.state.from, this.state.to);
+        //reset 'from' and 'to' so it remains clear which input is which for 
+        //subsequent calculations.
+        this.setState({
+            from: '',
+            to: ''
+        });
     }
 
     renderSelectInput() {
-        //sort currencies array before mapping for better ux.
-        const sortedObj = this.props.currencies.sort((a, b) => {
-            let textA = a.currencyName;
-            let textB = b.currencyName;
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        //sort currencies array alphabetically before mapping for better ux.
+        const sortedObjArr = this.props.currencies.sort((a, b) => {
+            //sort array of objects by values of currencyName properties. 
+            if (a.currencyName < b.currencyName) {
+                return -1;
+            } else if (a.currencyName > b.currencyName) {
+                return 1;
+            } else {
+                return 0;
+            }
         });
-        return sortedObj.map((currency, index) => {
-                    return (
-                        <option key={index} 
-                                value={currency.currencyId}>
+        // console.log('this is sorted:', sortedObjArr);
+        //remove duplicate entries by leveraging Set datatype
+        //which allows for has() and add() methods.
+            const seen = new Set();
+            const uniqueArr =  sortedObjArr.filter(item => {
+                return seen.has(item.currencyName) ? false : seen.add(item.currencyName);
+            })
+        //map through sorted, filtered currency array to render drop down list.
+        return uniqueArr.map((currency, index) => {
+            return (
+                    <option key={index} 
+                            value={currency.currencyId}>
                                     {currency.currencyName}
-                        </option>
+                    </option>
                     )
                 });
     }
@@ -43,7 +62,7 @@ class Form extends Component {
         return (
             <div>
                 <h2>Please choose two currencies to calculate conversion rate</h2>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} className="form">
                     <select value={this.state.from} 
                             name="from" 
                             onChange={this.handleChange}>
@@ -57,7 +76,8 @@ class Form extends Component {
                         {this.renderSelectInput()}
                     </select>
                     <input  type="submit"
-                            value="submit" />
+                            value="submit"
+                            className="submit" />
                 </form>
             </div>
         );

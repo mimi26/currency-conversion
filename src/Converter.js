@@ -15,8 +15,7 @@ class Converter extends Component {
     render() {
         return (
             <div>
-                <Form submitParams={this.props.submitParams} currencies={this.props.currencies} />
-                {this.props.rate ? <Layout rate={this.props.rate} /> : null}
+                
                 
             </div>
         );
@@ -24,3 +23,4 @@ class Converter extends Component {
 }
 
 export default Converter;
+
