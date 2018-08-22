@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Form from './Form';
 import Layout from './Layout';
-// import Converter from './Converter';
 
 // const API_PATH = 'https://free.currencyconverterapi.com/api/v5/convert?q=USD_GBP&compact=y'
 
